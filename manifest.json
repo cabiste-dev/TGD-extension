@@ -1,0 +1,23 @@
+{
+    "manifest_version": 3,
+    "name": "DTG",
+    "version": "0.1.0",
+    "description": "death to all gimmicks",
+    "icons": {
+        "128": "./assets/images/icons/icon128.png",
+        "48": "./assets/images/icons/icon48.png",
+        "16": "./assets/images/icons/icon16.png"
+    },
+    "action": {
+        "default_icon": "./assets/images/icons/icon16.png",
+        "default_popup": "popup.html"
+    },
+    "host_permissions": [
+        "*://*.twitter.com/"
+    ],
+    "permissions": [
+        "tabs",
+        "activeTab",
+        "cookies"
+    ]
+}
