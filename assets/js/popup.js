@@ -1,4 +1,5 @@
 import { SendClientEvent, SendMuteEvent } from "./TwitterApi.js";
+PopulatePopup();
 
 // document.getElementById("button_block").addEventListener("click", BlockAll);
 document.getElementById("button_mute").addEventListener("click", MuteAll);
@@ -60,5 +61,26 @@ function GenerateGuid() {
     );
 }
 
+async function PopulatePopup() {
+    let gimmicks = await GetAllGimmicks();
+    let gimmicksListElement = document.getElementById("gimmick_list");
+    let gimmicksCount = document.getElementById("gimmick_count");
+    gimmicksCount.innerText = gimmicks.length;
 
+    for (let i = 0; i < gimmicks.length; i++) {
+        let gimmick = gimmicks[i];
 
+        // create the link
+        let gimmickLink = document.createElement("a");
+        gimmickLink.innerText = gimmick;
+        gimmickLink.href = `https://twitter.com/${gimmick}`;
+        gimmickLink.target = "_blank";
+
+        // create the list item
+        let gimmickElement = document.createElement("li");
+        gimmickElement.appendChild(gimmickLink);
+
+        // add it to the list
+        gimmicksListElement.appendChild(gimmickElement);
+    }
+}
