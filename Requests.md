@@ -12,7 +12,7 @@ legends:
 - [[x]] -> Application/IndexedDB/localforage
 - ((x)) -> general
 
-## Keep alive request
+## client event request
 
 Post request, returns empty 200 if successful.
 
@@ -34,7 +34,7 @@ fetch("https://twitter.com/i/api/1.1/jot/client_event.json?keepalive=false", {
     "sec-fetch-mode": "cors",
     "sec-fetch-site": "same-origin",
     "x-client-transaction-id": "yvYYei1nJQj7Kg/dJgDqQ3w+jxjSPsK2Hnof5vCfJ3UcqkKx8pKmh2NFDfNAOXmZbROvW8rdsqaHf0QPXfAhcd/QnYu/yw",
-    "x-client-uuid": [[device:rweb.dmCryptoKeysXXX.deviceId]],
+    "x-client-uuid": [[device:rweb.dmCryptoKeysXXX.deviceId]] ((can be a random guid)),
     "x-csrf-token": {{ct0}},
     "x-twitter-active-user": "yes",
     "x-twitter-auth-type": "OAuth2Session",
@@ -71,7 +71,7 @@ fetch("https://twitter.com/i/api/1.1/mutes/users/create.json", {
     "sec-fetch-mode": "cors",
     "sec-fetch-site": "same-origin",
     "x-client-transaction-id": "lqpEJnE7eVSndlOBely2HyBi00SOYp7qQiZDuqzDeylA9h7trs762z8ZUa8cZSXFMU/zB5aQH3vma2ZOgfG/LexkQ/A9lw",
-    "x-client-uuid": [[device:rweb.dmCryptoKeysXXX.deviceId]],
+    "x-client-uuid": [[device:rweb.dmCryptoKeysXXX.deviceId]] ((can be a random guid)),
     "x-csrf-token": {{ct0}},
     "x-twitter-active-user": "yes",
     "x-twitter-auth-type": "OAuth2Session",
