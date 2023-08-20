@@ -18,6 +18,13 @@
     "permissions": [
         "tabs",
         "activeTab",
-        "cookies"
+        "cookies",
+        "storage"
+    ],
+    "content_scripts": [
+        {
+            "matches": ["*://*.twitter.com/"],
+            "js": ["./assets/js/contentScript.js"]
+        }
     ]
 }
