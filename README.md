@@ -16,3 +16,9 @@ well unfortunately i'm mega broke so i can't publish it on the chromium store (r
 # How to use
 
 just login to your twitter account, open the extension and click "mute all" then wait.
+
+# Contributions
+
+All contributions are welcome just make sure the code is clean.
+
+The API calls can be found in the [Requests.md](./Requests.md) file.
