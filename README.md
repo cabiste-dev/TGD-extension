@@ -11,7 +11,7 @@ well unfortunately i'm mega broke so i can't publish it on the chromium store (r
 3. got to your extension settings ([about://extensions/](about://extensions/))
 4. enable developer mode
 5. click on `Load unpacked` (top left)
-6. select the folder you extracted
+6. select the `src` folder from the files you extracted
 
 # How to use
 
