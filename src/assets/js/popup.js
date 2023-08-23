@@ -1,8 +1,7 @@
 import { SendClientEvent, SendMuteEvent } from "./TwitterApi.js";
 
 document.getElementById("button_mute").addEventListener("click", MuteAll);
-// document.getElementById("button_block").addEventListener("click", BlockAll);
-document.getElementById("button_test").addEventListener("click", Test);
+// document.getElementById("button_test").addEventListener("click", Test);
 
 var cookies;
 GetTwitterCookies();
@@ -53,7 +52,7 @@ function GetTwitterCookies() {
 async function GetAllGimmicks() {
     let data = [];
 
-    await fetch("https://raw.githubusercontent.com/cabiste69/DTG-extension/main/GimmickList.txt").then((response) => response.text())
+    await fetch("https://raw.githubusercontent.com/cabiste69/TGD-extension/main/GimmickList.txt").then((response) => response.text())
         .then((json) => data = json.split("\n"));
 
     return data;
