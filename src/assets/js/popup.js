@@ -1,25 +1,38 @@
 import { SendClientEvent, SendMuteEvent } from "./TwitterApi.js";
-PopulatePopup();
 
-// document.getElementById("button_block").addEventListener("click", BlockAll);
 document.getElementById("button_mute").addEventListener("click", MuteAll);
+// document.getElementById("button_block").addEventListener("click", BlockAll);
+document.getElementById("button_test").addEventListener("click", Test);
+
+var cookies;
+GetTwitterCookies();
+PopulatePopup();
 
 /**
  * Well since elon is removing blocking i guess this is not gonna be needed
- */
+*/
 // function BlockAll() {
 // }
 
+async function Test() {
+    let gimmies = await GetAllGimmicks();
+    console.log(gimmies);
+    for (let i = 0; i < gimmies.length; i++) {
+        window.open( `https://twitter.com/${gimmies[i]}`);
+    }
+}
 
 async function MuteAll() {
-    let cookies = await GetAllTwitterCookies();
     let uuid = GenerateGuid();
     let gimmicks = await GetAllGimmicks();
+
     for (let i = 0; i < gimmicks.length; i++) {
         let gimmick = gimmicks[i];
         // await SendClientEvent(cookies, uuid);
-        await SendMuteEvent(gimmick, cookies, uuid);
-        await sleep(1000);
+        let muted = await SendMuteEvent(gimmick, cookies, uuid);
+        if (muted) {
+            await sleep(1000);
+        }
     }
 }
 
@@ -31,10 +44,10 @@ function sleep(ms) {
  * gets all the cookies of twitter
  * @returns an array of cookies
  */
-async function GetAllTwitterCookies() {
-    let cookies = await chrome.cookies.getAll({ domain: "twitter.com" });
-
-    return cookies.filter(cookie => cookie.domain === ".twitter.com");
+function GetTwitterCookies() {
+    chrome.cookies.getAll({ domain: "twitter.com" }, function (data) {
+        cookies = data;
+    });
 }
 
 async function GetAllGimmicks() {
@@ -44,15 +57,6 @@ async function GetAllGimmicks() {
         .then((json) => data = json.split("\n"));
 
     return data;
-
-}
-
-function FormatCookies(cookies) {
-    let text = "";
-    for (let i = 0; i < cookies.length; i++) {
-        text += `${cookies[i].name}=${cookies[i].value}; `;
-    }
-    return text;
 }
 
 function GenerateGuid() {

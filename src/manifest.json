@@ -1,30 +1,31 @@
 {
-    "manifest_version": 3,
+    "manifest_version": 2,
     "name": "TGD",
     "version": "0.1.0",
     "description": "death to all gimmicks",
+    "homepage_url": "https://github.com/cabiste69/DTG-extension",
     "icons": {
         "128": "./assets/images/icons/icon128.png",
+        "96": "./assets/images/icons/icon96.png",
         "48": "./assets/images/icons/icon48.png",
+        "38": "./assets/images/icons/icon38.png",
+        "19": "./assets/images/icons/icon19.png",
         "16": "./assets/images/icons/icon16.png"
     },
-    "action": {
-        "default_icon": "./assets/images/icons/icon16.png",
-        "default_popup": "popup.html"
+    "browser_action": {
+        "browser_style": true,
+        "default_popup": "popup.html",
+        "default_title": "mute all sell out gimmicks",
+        "default_icon": {
+            "38": "./assets/images/icons/icon38.png",
+            "19": "./assets/images/icons/icon19.png",
+            "16": "./assets/images/icons/icon16.png"
+        }
     },
-    "host_permissions": [
-        "*://*.twitter.com/"
-    ],
     "permissions": [
         "tabs",
-        "activeTab",
         "cookies",
-        "storage"
-    ],
-    "content_scripts": [
-        {
-            "matches": ["*://*.twitter.com/"],
-            "js": ["./assets/js/contentScript.js"]
-        }
+        "<all_urls>",
+        "*://*.twitter.com/"
     ]
 }

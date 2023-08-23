@@ -29,6 +29,22 @@ export async function SendClientEvent(cookies, uuid) {
 }
 
 export async function SendMuteEvent(gimmick, cookies, uuid) {
+    let userData = await GetUserData(gimmick, cookies.find(cookie => cookie.name === "ct0").value);
+
+    let isMuted;
+    try {
+        isMuted = userData["user"]["result"]["legacy"]["muting"];
+    } catch (error) {
+        isMuted = true;
+    }
+
+    if (isMuted) {
+        console.log(`${gimmick} is already muted`);
+        return false;
+    }
+
+    let userId = userData["user"]["result"]["rest_id"];
+
     await fetch("https://twitter.com/i/api/1.1/mutes/users/create.json", {
         "headers": {
             "accept": "*/*",
@@ -52,15 +68,16 @@ export async function SendMuteEvent(gimmick, cookies, uuid) {
         },
         "referrer": "https://twitter.com/home",
         "referrerPolicy": "strict-origin-when-cross-origin",
-        "body": `user_id=${await GetUserId(gimmick, cookies.find(cookie => cookie.name === "ct0").value)}`,
+        "body": `user_id=${userId}`,
         "method": "POST",
         "mode": "cors",
         "credentials": "include"
     });
+    return true;
 }
 
-async function GetUserId(username, token) {
-    let id = "";
+async function GetUserData(username, token) {
+    let userData = "";
 
     await fetch(`https://twitter.com/i/api/graphql/SAMkL5y_N9pmahSw8yy6gw/UserByScreenName?variables=%7B%22screen_name%22%3A%22${username}%22%2C%22withSafetyModeUserFields%22%3Atrue%7D&features=%7B%22hidden_profile_likes_enabled%22%3Afalse%2C%22hidden_profile_subscriptions_enabled%22%3Atrue%2C%22responsive_web_graphql_exclude_directive_enabled%22%3Atrue%2C%22verified_phone_label_enabled%22%3Afalse%2C%22subscriptions_verification_info_is_identity_verified_enabled%22%3Afalse%2C%22subscriptions_verification_info_verified_since_enabled%22%3Atrue%2C%22highlights_tweets_tab_ui_enabled%22%3Atrue%2C%22creator_subscriptions_tweet_preview_api_enabled%22%3Atrue%2C%22responsive_web_graphql_skip_user_profile_image_extensions_enabled%22%3Afalse%2C%22responsive_web_graphql_timeline_navigation_enabled%22%3Atrue%7D&fieldToggles=%7B%22withAuxiliaryUserLabels%22%3Afalse%7D`, {
         "credentials": "include",
@@ -84,8 +101,8 @@ async function GetUserId(username, token) {
         "referrer": "https://twitter.com/home",
         "method": "GET",
         "mode": "cors"
-    }).then((response) => response.json()).then((data) => id = data["data"]["user"]["result"]["rest_id"]);
-    return id;
+    }).then((response) => response.json()).then((data) => userData = data["data"]);
+    return userData;
 }
 
 function GenerateClientTransaction() {
