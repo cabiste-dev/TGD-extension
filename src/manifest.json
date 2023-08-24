@@ -2,8 +2,8 @@
     "manifest_version": 2,
     "name": "TGD",
     "version": "0.1.0",
-    "description": "death to all gimmicks",
-    "homepage_url": "https://github.com/cabiste69/DTG-extension",
+    "description": "Mute twitter accounts that advertise NSFW content without warning.",
+    "homepage_url": "https://github.com/cabiste69/TGD-extension",
     "icons": {
         "128": "./assets/images/icons/icon128.png",
         "96": "./assets/images/icons/icon96.png",
@@ -15,7 +15,7 @@
     "browser_action": {
         "browser_style": true,
         "default_popup": "popup.html",
-        "default_title": "mute all sell out gimmicks",
+        "default_title": "TGD",
         "default_icon": {
             "38": "./assets/images/icons/icon38.png",
             "19": "./assets/images/icons/icon19.png",
