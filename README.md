@@ -1,11 +1,11 @@
 
 # Introduction
 
-This is a browser extension made to mass mute all gimmick account that promote NSFW content (onlyfans, feet fetishes etc...)
+This is a browser extension made to auto mute twitter accounts that go out of their gimmick to advertise NSFW content without warning.
 
 ## How to install
 
-well unfortunately i'm mega broke so i can't publish it on the chromium store (requires $5) so here's a step by step on how to install it manually
+*Will be available on stores soon hopefully*
 
 1. download the [source code](https://github.com/cabiste69/DTG-extension/archive/refs/heads/main.zip)
 2. extract it wherever you want

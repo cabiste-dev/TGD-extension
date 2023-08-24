@@ -1,22 +1,24 @@
 # Explanation
 
-as you can see below there are 2 main values i did not hide `authorization` and `X-Client-Transaction-Id`, that's because they they are not user specific.
+There are 2 main values i did not hide `authorization` and `X-Client-Transaction-Id`, that's because they they are not user specific.
 
-`X-Client-Transaction-Id`: this is a random string of 94 characters, it's not a hash but a weird combination of some, with a format of `"{23-29 characters}+{56-62 letter}/{7 characters}"`
+`authorization`: this is funnily a global value (verified it with other users) i think it's a duct tape solution for when they made the API paid only
 
-`authorization`: this is funilly a global value (verifed it with other users) i think it's a duct tape solution for when they made the API paid only
+`X-Client-Transaction-Id`: is a random string of 94 characters, it's not a hash but a weird combination of some, with a default format of `"{23-29 characters}+{56-62 letter}/{7 characters}"`, tho this really doesn't matter and twitter will accept any string as long as it's 94 characters long
 
 legends:
 
-- {{x}} -> Application/cookies
-- [[x]] -> Application/IndexedDB/localforage
-- ((x)) -> general
+- {{x}} -> Storage/cookies
+- [[x]] -> Storage/IndexedDB/localforage
+- ((x)) -> general information
+
+*Note that not all the headers are required.*
 
 ## client event request
 
 Post request, returns empty 200 if successful.
 
-required before any action on twitter also note that not all the headers are required.
+sent (but not required?) before any action on twitter.
 
 ```js
 fetch("https://twitter.com/i/api/1.1/jot/client_event.json?keepalive=false", {
@@ -33,14 +35,14 @@ fetch("https://twitter.com/i/api/1.1/jot/client_event.json?keepalive=false", {
     "sec-fetch-dest": "empty",
     "sec-fetch-mode": "cors",
     "sec-fetch-site": "same-origin",
-    "x-client-transaction-id": "yvYYei1nJQj7Kg/dJgDqQ3w+jxjSPsK2Hnof5vCfJ3UcqkKx8pKmh2NFDfNAOXmZbROvW8rdsqaHf0QPXfAhcd/QnYu/yw",
+    "x-client-transaction-id": ((random 94 characters string)),
     "x-client-uuid": [[device:rweb.dmCryptoKeysXXX.deviceId]] ((can be a random guid)),
     "x-csrf-token": {{ct0}},
     "x-twitter-active-user": "yes",
     "x-twitter-auth-type": "OAuth2Session",
     "x-twitter-client-language": "en"
   },
-  "referrer": ((current page url)),
+  "referrer": ((current page url but it doesnt affect anything)),
   "referrerPolicy": "strict-origin-when-cross-origin",
   "method": "POST",
   "mode": "cors",
@@ -51,8 +53,6 @@ fetch("https://twitter.com/i/api/1.1/jot/client_event.json?keepalive=false", {
 ## Mute request
 
 Post request, returns 200 with a json body if successful.
-
-this is the actual mute request.
 
 ```js
 fetch("https://twitter.com/i/api/1.1/mutes/users/create.json", {
@@ -69,14 +69,14 @@ fetch("https://twitter.com/i/api/1.1/mutes/users/create.json", {
     "sec-fetch-dest": "empty",
     "sec-fetch-mode": "cors",
     "sec-fetch-site": "same-origin",
-    "x-client-transaction-id": "lqpEJnE7eVSndlOBely2HyBi00SOYp7qQiZDuqzDeylA9h7trs762z8ZUa8cZSXFMU/zB5aQH3vma2ZOgfG/LexkQ/A9lw",
+    "x-client-transaction-id": ((random 94 characters string)),
     "x-client-uuid": [[device:rweb.dmCryptoKeysXXX.deviceId]] ((can be a random guid)),
     "x-csrf-token": {{ct0}},
     "x-twitter-active-user": "yes",
     "x-twitter-auth-type": "OAuth2Session",
     "x-twitter-client-language": "en"
   },
-  "referrer": ((current page url)),
+  "referrer": ((current page url but it doesnt affect anything)),
   "referrerPolicy": "strict-origin-when-cross-origin",
   "body": "user_id=((id of the user to mute))",
   "method": "POST",
@@ -91,7 +91,7 @@ Post request, returns 200 with a json body if successful.
 
 *This one has the goofiest URL (i'll see if i can clean it up)*
 
-This request returns basic information about the account and is mainly used to get the user's ID under `data/user/result/rest_id`
+This request returns basic information about the account and is mainly used to get the user's ID under `data/user/result/rest_id` and to check if the user is already muted under `data/user/result/legacy/muting`
 
 ```js
 fetch(`https://twitter.com/i/api/graphql/SAMkL5y_N9pmahSw8yy6gw/UserByScreenName?variables=%7B%22screen_name%22%3A%22${username}%22%2C%22withSafetyModeUserFields%22%3Atrue%7D&features=%7B%22hidden_profile_likes_enabled%22%3Afalse%2C%22hidden_profile_subscriptions_enabled%22%3Atrue%2C%22responsive_web_graphql_exclude_directive_enabled%22%3Atrue%2C%22verified_phone_label_enabled%22%3Afalse%2C%22subscriptions_verification_info_is_identity_verified_enabled%22%3Afalse%2C%22subscriptions_verification_info_verified_since_enabled%22%3Atrue%2C%22highlights_tweets_tab_ui_enabled%22%3Atrue%2C%22creator_subscriptions_tweet_preview_api_enabled%22%3Atrue%2C%22responsive_web_graphql_skip_user_profile_image_extensions_enabled%22%3Afalse%2C%22responsive_web_graphql_timeline_navigation_enabled%22%3Atrue%7D&fieldToggles=%7B%22withAuxiliaryUserLabels%22%3Afalse%7D`, {
@@ -113,7 +113,7 @@ fetch(`https://twitter.com/i/api/graphql/SAMkL5y_N9pmahSw8yy6gw/UserByScreenName
         "Pragma": "no-cache",
         "Cache-Control": "no-cache"
     },
-    "referrer": "https://twitter.com/home",
+    "referrer": ((current page url but it doesnt affect anything)),
     "method": "GET",
     "mode": "cors"
 })
@@ -121,79 +121,78 @@ fetch(`https://twitter.com/i/api/graphql/SAMkL5y_N9pmahSw8yy6gw/UserByScreenName
 
 **Example response:**
 
+muted elon musk (please don't ban me)
+
 ```json
 {
     "data": {
         "user": {
             "result": {
                 "__typename": "User",
-                "id": "VXNlcjoxMjMwNjc2MjE4NzcwNTc5NDU2",
-                "rest_id": "1230676218770579456",
-                "affiliates_highlighted_label": {},
+                "id": "VXNlcjo0NDE5NjM5Nw==",
+                "rest_id": "44196397",
+                "affiliates_highlighted_label": {
+                    "label": {
+                        "url": {
+                            "url": "https://twitter.com/X",
+                            "urlType": "DeepLink"
+                        },
+                        "badge": {
+                            "url": "https://pbs.twimg.com/profile_images/1683899100922511378/5lY42eHs_bigger.jpg"
+                        },
+                        "description": "X",
+                        "userLabelType": "BusinessLabel",
+                        "userLabelDisplayType": "Badge"
+                    }
+                },
                 "has_graduated_access": true,
                 "is_blue_verified": true,
                 "profile_image_shape": "Circle",
                 "legacy": {
-                    "can_dm": true,
-                    "can_media_tag": true,
-                    "created_at": "Fri Feb 21 02:10:58 +0000 2020",
-                    "default_profile": true,
+                    "following": true,
+                    "muting": true,
+                    "can_dm": false,
+                    "can_media_tag": false,
+                    "created_at": "Tue Jun 02 20:12:29 +0000 2009",
+                    "default_profile": false,
                     "default_profile_image": false,
-                    "description": "Sports + Business | Investing at Pomp Investments | Host of The Joe Pomp Show | Join 100,000+ others and sign up for my free newsletter: https://t.co/jw1SiKBsmh",
+                    "description": "",
                     "entities": {
                         "description": {
-                            "urls": [
-                                {
-                                    "display_url": "readhuddleup.com",
-                                    "expanded_url": "http://readhuddleup.com",
-                                    "url": "https://t.co/jw1SiKBsmh",
-                                    "indices": [
-                                        137,
-                                        160
-                                    ]
-                                }
-                            ]
-                        },
-                        "url": {
-                            "urls": [
-                                {
-                                    "display_url": "joepompliano.com",
-                                    "expanded_url": "https://www.joepompliano.com/",
-                                    "url": "https://t.co/8rwBk6ES7u",
-                                    "indices": [
-                                        0,
-                                        23
-                                    ]
-                                }
-                            ]
+                            "urls": []
                         }
                     },
                     "fast_followers_count": 0,
-                    "favourites_count": 88313,
-                    "followers_count": 556831,
-                    "friends_count": 1590,
+                    "favourites_count": 31131,
+                    "followers_count": 154257287,
+                    "friends_count": 415,
                     "has_custom_timelines": true,
                     "is_translator": false,
-                    "listed_count": 3060,
-                    "location": "",
-                    "media_count": 4519,
-                    "name": "Joe Pompliano",
-                    "normal_followers_count": 556831,
+                    "listed_count": 126687,
+                    "location": "\uD835\uDD4FÐ",
+                    "media_count": 1669,
+                    "name": "Elon Musk",
+                    "normal_followers_count": 154257287,
                     "pinned_tweet_ids_str": [
-                        "1400245761854652417"
+                        "1694530708340138040"
                     ],
                     "possibly_sensitive": false,
-                    "profile_banner_url": "https://pbs.twimg.com/profile_banners/1230676218770579456/1634679162",
-                    "profile_image_url_https": "https://pbs.twimg.com/profile_images/1482849191214915587/o-aZo4xw_normal.jpg",
+                    "profile_banner_url": "https://pbs.twimg.com/profile_banners/44196397/1690621312",
+                    "profile_image_url_https": "https://pbs.twimg.com/profile_images/1683325380441128960/yRsRRjGO_normal.jpg",
                     "profile_interstitial_type": "",
-                    "screen_name": "JoePompliano",
-                    "statuses_count": 18092,
+                    "screen_name": "elonmusk",
+                    "statuses_count": 29867,
                     "translator_type": "none",
-                    "url": "https://t.co/8rwBk6ES7u",
                     "verified": false,
-                    "want_retweets": false,
+                    "want_retweets": true,
                     "withheld_in_countries": []
                 },
+                "professional": {
+                    "rest_id": "1679729435447275522",
+                    "professional_type": "Creator",
+                    "category": []
+                },
+                "super_follow_eligible": true,
                 "smart_blocked_by": false,
                 "smart_blocking": false,
                 "legacy_extended_profile": {},
@@ -202,27 +201,36 @@ fetch(`https://twitter.com/i/api/graphql/SAMkL5y_N9pmahSw8yy6gw/UserByScreenName
                 "verification_info": {
                     "reason": {
                         "description": {
-                            "text": "This account is verified. Learn more",
+                            "text": "This account is verified because it's an affiliate of @X on X. Learn more",
                             "entities": [
                                 {
-                                    "from_index": 26,
-                                    "to_index": 36,
+                                    "from_index": 54,
+                                    "to_index": 56,
                                     "ref": {
-                                        "url": "https://help.twitter.com/managing-your-account/about-twitter-verified-accounts",
+                                        "url": "https://twitter.com/X",
+                                        "url_type": "ExternalUrl"
+                                    }
+                                },
+                                {
+                                    "from_index": 63,
+                                    "to_index": 73,
+                                    "ref": {
+                                        "url": "If a Blue Publisher charges readers for content, you’ll need to subscribe directly to their publication to read stories behind their paywall.s",
                                         "url_type": "ExternalUrl"
                                     }
                                 }
                             ]
                         },
-                        "verified_since_msec": "1624362789948"
+                        "verified_since_msec": "-156836000000000",
+                        "override_verified_year": -3000
                     }
                 },
                 "highlights_info": {
                     "can_highlight_tweets": true,
-                    "highlighted_tweets": "0"
+                    "highlighted_tweets": "29"
                 },
                 "business_account": {},
-                "creator_subscriptions_count": 0
+                "creator_subscriptions_count": 120
             }
         }
     }
