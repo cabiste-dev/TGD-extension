@@ -1,3 +1,8 @@
+/**
+ * calls the twitter API endpoint for a client event (this is currently not needed)
+ * @param {cookie[]} cookies the cookies of the currently logged in user
+ * @param {string} uuid a random GUID acting like the device's ID
+ */
 export async function SendClientEvent(cookies, uuid) {
     await fetch("https://twitter.com/i/api/1.1/jot/client_event.json?keepalive=false", {
         "headers": {
@@ -28,10 +33,18 @@ export async function SendClientEvent(cookies, uuid) {
     });
 }
 
+/**
+ * calls the twitter API endpoint for muting a user
+ * @param {string} gimmick username without the @
+ * @param {cookie[]} cookies the cookies of the currently logged in user
+ * @param {string} uuid a random GUID acting like the device's ID
+ * @returns {boolean} true if the user was muted and false if they're already muted / can't be muted
+ */
 export async function SendMuteEvent(gimmick, cookies, uuid) {
     let userData = await GetUserData(gimmick, cookies.find(cookie => cookie.name === "ct0").value);
 
     let isMuted;
+    // this so it doesn't break if the account is suspended
     try {
         isMuted = userData["user"]["result"]["legacy"]["muting"];
     } catch (error) {
@@ -76,6 +89,12 @@ export async function SendMuteEvent(gimmick, cookies, uuid) {
     return true;
 }
 
+/**
+ * gets a twitter user's public data
+ * @param {string} username username without the @
+ * @param {string} token the token of the currently logged in user (cookies -> ct0)
+ * @returns json (see Requests.md#Get User Request)
+ */
 async function GetUserData(username, token) {
     let userData = "";
 
@@ -88,7 +107,7 @@ async function GetUserData(username, token) {
             "content-type": "application/json",
             "authorization": "Bearer AAAAAAAAAAAAAAAAAAAAANRILgAAAAAAnNwIzUejRCOuH5E6I8xnZz4puTs%3D1Zv7ttfk8LF81IUq16cHjhLTvJu4FA33AGWWjCpTnA",
             "x-csrf-token": token,
-            "x-guest-token": "1693315023072804864",
+            "x-guest-token": "1693315023072804864", // i think this one is unnecessary
             "x-twitter-client-language": "en",
             "x-twitter-active-user": "yes",
             "X-Client-Transaction-Id": GenerateClientTransaction(),
@@ -105,6 +124,10 @@ async function GetUserData(username, token) {
     return userData;
 }
 
+/**
+ * generates a random string that can be used as a transaction "id"
+ * @returns a 94 character string
+ */
 function GenerateClientTransaction() {
     let result = '';
     let length = 94;
