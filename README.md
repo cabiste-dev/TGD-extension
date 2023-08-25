@@ -5,18 +5,24 @@ This is a browser extension made to auto mute twitter accounts that go out of th
 
 ## How to install
 
-*Will be available on stores soon hopefully*
+### online stores
+
+[Firefox store](https://addons.mozilla.org/en-US/firefox/addon/tgd/)
+
+Chrome store *Will be available soon hopefully*
+
+### manual
 
 1. download the [source code](https://github.com/cabiste69/DTG-extension/archive/refs/heads/main.zip)
 2. extract it wherever you want
 
-### chromium
+#### chromium
 
 1. enter `about://extensions/` in the URL bar
 2. enable developer mode (top right)
 3. click on `Load unpacked` (top left)
 
-### firefox
+#### firefox
 
 1. enter `about:debugging` in the URL bar
 2. on the side bar click "This firefox"
