@@ -14,7 +14,7 @@
     },
     "browser_action": {
         "browser_style": true,
-        "default_popup": "popup.html",
+        "default_popup": "./popup/popup.html",
         "default_title": "TGD",
         "default_icon": {
             "38": "./assets/images/icons/icon38.png",
@@ -22,14 +22,14 @@
             "16": "./assets/images/icons/icon16.png"
         }
     },
+    "background": {
+        "page": "./background/background.html",
+        "persistent": false
+    },
     "permissions": [
         "tabs",
         "cookies",
         "<all_urls>",
         "*://*.twitter.com/"
-    ],
-    "background": {
-        "page": "./background/background.html",
-        "persistent": false
-    }
+    ]
 }
