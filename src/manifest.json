@@ -27,5 +27,9 @@
         "cookies",
         "<all_urls>",
         "*://*.twitter.com/"
-    ]
+    ],
+    "background": {
+        "page": "./background/background.html",
+        "persistent": false
+    }
 }
