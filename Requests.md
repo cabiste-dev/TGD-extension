@@ -120,9 +120,17 @@ fetch(`https://twitter.com/i/api/graphql/SAMkL5y_N9pmahSw8yy6gw/UserByScreenName
 })
 ```
 
+Using a [URL decoder](https://www.urldecoder.io/) the default request url turns out to be a query with a json attached to it:
+
+```bash
+https://twitter.com/i/api/graphql/G3KGOASz96M-Qu0nwmGXNg/UserByScreenName?variables={"screen_name":"waxpeer","withSafetyModeUserFields":true}&features={"hidden_profile_likes_enabled":false,"hidden_profile_subscriptions_enabled":true,"responsive_web_graphql_exclude_directive_enabled":true,"verified_phone_label_enabled":false,"subscriptions_verification_info_is_identity_verified_enabled":false,"subscriptions_verification_info_verified_since_enabled":true,"highlights_tweets_tab_ui_enabled":true,"creator_subscriptions_tweet_preview_api_enabled":true,"responsive_web_graphql_skip_user_profile_image_extensions_enabled":false,"responsive_web_graphql_timeline_navigation_enabled":true}&fieldToggles={"withAuxiliaryUserLabels":false}
+```
+
+Note: *this is not the request used by the extension, I disabled some features to use less data. (saved 5 json lines)*
+
 **Example response:**
 
-muted elon musk (please don't ban me)
+Muted elon musk (please don't ban me)
 
 ```json
 {
