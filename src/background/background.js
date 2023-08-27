@@ -10,22 +10,21 @@ import {SendMuteEvent} from "../assets/js/TwitterApi.js";
 
 // thanks to https://github.com/moshfeu/chrome-extension-notification-demo
 chrome.runtime.onMessage.addListener(data => {
-    if (data.type === 'count') {
-        Count();
+    if (data.type === 'test') {
+        Test();
     }
     if (data.type === 'mute') {
         MuteUsers();
     }
 });
+
 var cookies;
 LoadTwitterCookies();
 
-async function Count() {
-    for (let i = 0; i < 50; i++) {
-        console.log(i);
-        await sleep(100);
-    }
-    alert("goob");
+async function Test() {
+    console.log(cookies.find(cookie => cookie.name === "ct0").value);
+    // options.callBack("dab");
+    // alert(cookies.find(cookie => cookie.name === "ct0").value);
 }
 
 async function MuteUsers() {

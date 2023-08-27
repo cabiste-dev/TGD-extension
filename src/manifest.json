@@ -29,7 +29,6 @@
     "permissions": [
         "tabs",
         "cookies",
-        "<all_urls>",
         "*://*.twitter.com/"
     ]
 }

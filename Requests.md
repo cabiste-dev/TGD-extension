@@ -1,3 +1,4 @@
+
 # Explanation
 
 There are 2 main values i did not hide `authorization` and `X-Client-Transaction-Id`, that's because they they are not user specific.
@@ -10,7 +11,7 @@ legends:
 
 - {{x}} -> Storage/cookies
 - [[x]] -> Storage/IndexedDB/localforage
-- ((x)) -> general information
+- ((x)) -> General information
 
 *Note that not all the headers are required.*
 

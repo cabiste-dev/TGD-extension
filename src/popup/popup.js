@@ -2,7 +2,7 @@
 
 
 document.getElementById("button_mute").addEventListener("click", MuteButton_Clicked);
-// document.getElementById("button_test").addEventListener("click", Test);
+document.getElementById("button_test").addEventListener("click", Test);
 
 // Initialize some stuff on opening the popup
 
@@ -13,7 +13,7 @@ PopulatePopup();
 */
 async function Test() {
     chrome.runtime.sendMessage('', {
-        type: 'count'
+        type: 'test'
     });
 }
 
