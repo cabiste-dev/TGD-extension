@@ -1,3 +1,25 @@
+//!---------------------------------------------------
+//! This file contains calls to the twitter API v1.1 |
+//!---------------------------------------------------
+
+
+import { GetCookieByName } from "./BrowserServices.js";
+
+/**
+ * Checks if there's a logged in account on twitter.
+ * @returns boolean
+ */
+export async function IsLoggedIn() {
+    try {
+        // "auth_token" is your actual token, idk why "ct0" is used instead of it
+        // "auth_token" only exist if you're logged in
+        await GetCookieByName("auth_token");
+        return true;
+    } catch {
+        return false;
+    }
+}
+
 /**
  * calls the twitter API endpoint for a client event (this is currently not needed)
  * @param {cookie[]} cookies the cookies of the currently logged in user
@@ -33,12 +55,11 @@ export async function SendClientEvent(cookies, uuid) {
 /**
  * calls the twitter API endpoint for muting a user
  * @param {string} gimmick username without the @
- * @param {cookie[]} cookies the cookies of the currently logged in user
  * @param {string} uuid a random GUID acting like the device's ID
  * @returns {boolean} true if the user was muted and false if they're already muted / can't be muted
  */
-export async function SendMuteEvent(gimmick, cookies, uuid) {
-    let userData = await GetUserData(gimmick, cookies.find(cookie => cookie.name === "ct0").value);
+export async function SendMuteRequest(gimmick, uuid) {
+    let userData = await GetUserData(gimmick);
 
     let isMuted;
     // this so it doesn't break if the account is suspended
@@ -68,7 +89,7 @@ export async function SendMuteEvent(gimmick, cookies, uuid) {
             "sec-fetch-site": "same-origin",
             "x-client-transaction-id": GenerateClientTransaction(),
             "x-client-uuid": uuid,
-            "x-csrf-token": cookies.find(cookie => cookie.name === "ct0").value,
+            "x-csrf-token": await GetCookieByName("ct0"),
             "x-twitter-active-user": "yes",
             "x-twitter-auth-type": "OAuth2Session",
             "x-twitter-client-language": "en"
@@ -89,7 +110,7 @@ export async function SendMuteEvent(gimmick, cookies, uuid) {
  * @param {string} token the token of the currently logged in user (cookies -> ct0)
  * @returns json (see Requests.md#Get User Request)
  */
-async function GetUserData(username, token) {
+async function GetUserData(username) {
     let userData = "";
 
     await fetch(`https://twitter.com/i/api/graphql/G3KGOASz96M-Qu0nwmGXNg/UserByScreenName?variables=%7B%22screen_name%22%3A%22${username}%22%2C%22withSafetyModeUserFields%22%3Atrue%7D&features=%7B%22hidden_profile_likes_enabled%22%3Afalse%2C%22hidden_profile_subscriptions_enabled%22%3Atrue%2C%22responsive_web_graphql_exclude_directive_enabled%22%3Atrue%2C%22verified_phone_label_enabled%22%3Afalse%2C%22subscriptions_verification_info_is_identity_verified_enabled%22%3Afalse%2C%22subscriptions_verification_info_verified_since_enabled%22%3Afalse%2C%22highlights_tweets_tab_ui_enabled%22%3Afalse%2C%22creator_subscriptions_tweet_preview_api_enabled%22%3Atrue%2C%22responsive_web_graphql_skip_user_profile_image_extensions_enabled%22%3Afalse%2C%22responsive_web_graphql_timeline_navigation_enabled%22%3Afalse%7D&fieldToggles=%7B%22withAuxiliaryUserLabels%22%3Afalse%7D`, {
@@ -98,7 +119,7 @@ async function GetUserData(username, token) {
             "Accept": "*/*",
             "content-type": "application/json",
             "authorization": "Bearer AAAAAAAAAAAAAAAAAAAAANRILgAAAAAAnNwIzUejRCOuH5E6I8xnZz4puTs%3D1Zv7ttfk8LF81IUq16cHjhLTvJu4FA33AGWWjCpTnA",
-            "x-csrf-token": token,
+            "x-csrf-token": await GetCookieByName("ct0"),
             "x-twitter-client-language": "en",
             "x-twitter-active-user": "yes",
             "X-Client-Transaction-Id": GenerateClientTransaction(),
