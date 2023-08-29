@@ -1,8 +1,10 @@
 {
     "manifest_version": 2,
-    "name": "TGD",
-    "version": "0.1.0",
+    "name": "Total Gimmick Death",
+    "short_name": "TGD",
     "description": "Mute twitter accounts that advertise NSFW content without warning.",
+    "version": "0.2.0",
+    "author": "cabiste",
     "homepage_url": "https://github.com/cabiste69/TGD-extension",
     "icons": {
         "128": "./assets/images/icons/icon128.png",
@@ -29,6 +31,7 @@
     "permissions": [
         "tabs",
         "cookies",
+        "notifications",
         "*://*.twitter.com/"
     ]
 }
