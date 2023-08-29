@@ -1,8 +1,10 @@
 
-
+import { IsLoggedIn } from "../assets/js/TwitterServices.js";
+import { GetAllGimmicks } from "../assets/js/General.js";
+import { Notify } from "../assets/js/BrowserServices.js";
 
 document.getElementById("button_mute").addEventListener("click", MuteButton_Clicked);
-document.getElementById("button_test").addEventListener("click", Test);
+// document.getElementById("button_test").addEventListener("click", Test);
 
 // Initialize some stuff on opening the popup
 
@@ -12,26 +14,32 @@ PopulatePopup();
  * for debugging random stuff
 */
 async function Test() {
-    chrome.runtime.sendMessage('', {
-        type: 'test'
-    });
+    // chrome.runtime.sendMessage('', {
+    //     type: 'test'
+    // });
+
+    let isLoggedIn = await IsLoggedIn();
+    if (!isLoggedIn) {
+        Notify("Login Required!", "You need to be logged in to twitter for the extension to work!");
+        return;
+    }
+    Notify("Logged in!", "You're logged in");
 }
 
 /**
- * mutes all the users
+ * Sends a mute event when the "mute all" button is clicked.
 */
 async function MuteButton_Clicked() {
+    let isLoggedIn = await IsLoggedIn();
+    if (!isLoggedIn) {
+        Notify("Login Required!", "You need to be logged in to twitter for the extension to work!");
+        return;
+    }
+
     chrome.runtime.sendMessage('', {
         type: 'mute'
     });
 }
-
-/**
- * since elon is removing blocking i guess this is not gonna be needed
-*/
-// function BlockAll() {
-// }
-
 
 /**
  * Populates the popup with the names of the users to mute
@@ -60,13 +68,4 @@ async function PopulatePopup() {
         // add it to the list
         gimmicksListElement.appendChild(gimmickElement);
     }
-}
-
-async function GetAllGimmicks() {
-    let data = [];
-
-    await fetch("https://raw.githubusercontent.com/cabiste69/TGD-extension/main/GimmickList.txt").then((response) => response.text())
-        .then((json) => data = json.split("\n"));
-
-    return data;
 }
