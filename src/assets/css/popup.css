@@ -1,0 +1,23 @@
+.popup {
+    width: 20rem;
+    padding-top: 1rem;
+    padding-left: 1rem;
+    padding-bottom: 1rem;
+    background-color: black;
+    color: white;
+    border: 1px solid white;
+    border-radius: 2px;
+
+}
+
+/* .seperator {
+    height: 200px;
+} */
+
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: white;
+}

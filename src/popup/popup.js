@@ -57,7 +57,7 @@ async function PopulatePopup() {
 
         // create the link
         let gimmickLink = document.createElement("a");
-        gimmickLink.innerText = gimmick;
+        gimmickLink.innerText = `@${gimmick}`;
         gimmickLink.href = `https://twitter.com/${gimmick}`;
         gimmickLink.target = "_blank";
 
