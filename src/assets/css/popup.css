@@ -1,8 +1,9 @@
 .popup {
-    width: 20rem;
+    width: 19rem;
     padding-top: 1rem;
     padding-left: 1rem;
     padding-bottom: 1rem;
+    margin-bottom: 1px;
     background-color: black;
     color: white;
     border: 1px solid white;
@@ -10,7 +11,7 @@
 
 }
 
-.seperator {
+.separator {
     height: 2px;
     margin-right: 1rem;
 }
