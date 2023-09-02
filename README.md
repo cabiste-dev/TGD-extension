@@ -3,6 +3,10 @@
 
 This is a browser extension made to auto mute twitter accounts that go out of their gimmick to advertise NSFW content without warning.
 
+## Screenshots
+
+![popup](./Images/screenshot.png)
+
 ## How to install
 
 ### online stores
@@ -42,7 +46,7 @@ In no particular order
 
 - [x] Write a todo list.
 - [x] Add credits
-- [ ] Make the extension look good. (impossible!)
+- [x] Make the extension look good. (impossible!)
 - [ ] Add a report functionality (this will require and API and a database)
 - [ ] Add ignore list.
 - [ ] Expand the users list to OF "models".
